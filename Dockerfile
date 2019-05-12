@@ -14,4 +14,5 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o manager github.com/vcd-
 FROM ubuntu:latest
 WORKDIR /
 COPY --from=builder /go/src/github.com/vcd-operator/cluster-api-provider-vcd/manager .
-ENTRYPOINT ["/manager"]
+#ENTRYPOINT ["/manager"]
+ENTRYPOINT ["/bin/bash"]

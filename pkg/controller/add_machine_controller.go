@@ -17,15 +17,15 @@ limitations under the License.
 package controller
 
 import (
-        "github.com/vcd-operator/cluster-api-provider-vcd/pkg/cloud/vcd/actuators/machine"
-        capimachine "sigs.k8s.io/cluster-api/pkg/controller/machine"
-        "sigs.k8s.io/controller-runtime/pkg/manager"
+	"github.com/vcd-operator/cluster-api-provider-vcd/pkg/cloud/vcd/actuators/machine"
+	capimachine "sigs.k8s.io/cluster-api/pkg/controller/machine"
+	"sigs.k8s.io/controller-runtime/pkg/manager"
 )
 
 //+kubebuilder:rbac:groups=vcd.k8s.io,resources=vcdmachineproviderspecs;vcdmachineproviderstatuses,verbs=get;list;watch;create;update;patch;delete
 func init() {
-        // AddToManagerFuncs is a list of functions to create controllers and add them to a manager.
-        AddToManagerFuncs = append(AddToManagerFuncs, func(m manager.Manager) error {
-                return capimachine.AddWithActuator(m, &machine.Actuator{})
-        })
+	// AddToManagerFuncs is a list of functions to create controllers and add them to a manager.
+	AddToManagerFuncs = append(AddToManagerFuncs, func(m manager.Manager) error {
+		return capimachine.AddWithActuator(m, &machine.Actuator{})
+	})
 }

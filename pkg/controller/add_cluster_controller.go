@@ -17,20 +17,19 @@ limitations under the License.
 package controller
 
 import (
-        "github.com/vcd-operator/cluster-api-provider-vcd/pkg/cloud/vcd/actuators/cluster"
-        capicluster "sigs.k8s.io/cluster-api/pkg/controller/cluster"
-        "sigs.k8s.io/controller-runtime/pkg/manager"
+	"github.com/vcd-operator/cluster-api-provider-vcd/pkg/cloud/vcd/actuators/cluster"
+	capicluster "sigs.k8s.io/cluster-api/pkg/controller/cluster"
+	"sigs.k8s.io/controller-runtime/pkg/manager"
 )
 
 //+kubebuilder:rbac:groups=vcd.k8s.io,resources=vcdclusterproviderspecs;vcdclusterproviderstatuses,verbs=get;list;watch;create;update;patch;delete
 func init() {
-        // AddToManagerFuncs is a list of functions to create controllers and add them to a manager.
-        AddToManagerFuncs = append(AddToManagerFuncs, func(m manager.Manager) error {
-                actuator, err := cluster.NewActuator(cluster.ActuatorParams{})
-                if err != nil {
-                        return err
-                }
-                return capicluster.AddWithActuator(m, actuator)
-        })
+	// AddToManagerFuncs is a list of functions to create controllers and add them to a manager.
+	AddToManagerFuncs = append(AddToManagerFuncs, func(m manager.Manager) error {
+		actuator, err := cluster.NewActuator(cluster.ActuatorParams{})
+		if err != nil {
+			return err
+		}
+		return capicluster.AddWithActuator(m, actuator)
+	})
 }
-
