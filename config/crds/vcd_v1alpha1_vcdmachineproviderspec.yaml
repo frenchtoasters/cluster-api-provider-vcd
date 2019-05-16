@@ -27,8 +27,115 @@ spec:
         metadata:
           type: object
         spec:
+          properties:
+            configSource:
+              type: object
+            metadata:
+              description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                Important: Run "make" to regenerate code after modifying this file'
+              type: object
+            providerSpec:
+              properties:
+                value:
+                  description: Value is an inlined, serialized representation of the
+                    resource configuration. It is recommended that providers maintain
+                    their own versioned API types that should be serialized/deserialized
+                    from this field, akin to component config.
+                  type: object
+                valueFrom:
+                  description: Source for the provider configuration. Cannot be used
+                    if value is not empty.
+                  properties:
+                    machineClass:
+                      description: The machine class from which the provider config
+                        should be sourced.
+                      properties:
+                        provider:
+                          description: Provider is the name of the cloud-provider
+                            which MachineClass is intended for.
+                          type: string
+                      type: object
+                  type: object
+              type: object
+            taints:
+              items:
+                type: object
+              type: array
+            versions:
+              properties:
+                controlPlane:
+                  description: ControlPlane is the semantic version of the Kubernetes
+                    control plane to run. This should only be populated when the machine
+                    is a control plane.
+                  type: string
+                kubelet:
+                  description: Kubelet is the semantic version of kubelet to run
+                  type: string
+              required:
+              - kubelet
+              type: object
+          required:
+          - providerSpec
           type: object
         status:
+          properties:
+            addresses:
+              items:
+                type: object
+              type: array
+            conditions:
+              items:
+                type: object
+              type: array
+            errorMessage:
+              type: string
+            errorReason:
+              type: string
+            lastOperation:
+              properties:
+                description:
+                  description: Description is the human-readable description of the
+                    last operation.
+                  type: string
+                lastUpdated:
+                  description: LastUpdated is the timestamp at which LastOperation
+                    API was last-updated.
+                  format: date-time
+                  type: string
+                state:
+                  description: State is the current status of the last performed operation.
+                    E.g. Processing, Failed, Successful etc
+                  type: string
+                type:
+                  description: Type is the type of operation which was last performed.
+                    E.g. Create, Delete, Update etc
+                  type: string
+              type: object
+            lastUpdated:
+              format: date-time
+              type: string
+            nodeRef:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "make" to regenerate code after modifying
+                this file'
+              type: object
+            phase:
+              type: string
+            providerStatus:
+              type: object
+            versions:
+              properties:
+                controlPlane:
+                  description: ControlPlane is the semantic version of the Kubernetes
+                    control plane to run. This should only be populated when the machine
+                    is a control plane.
+                  type: string
+                kubelet:
+                  description: Kubelet is the semantic version of kubelet to run
+                  type: string
+              required:
+              - kubelet
+              type: object
           type: object
   version: v1alpha1
 status:

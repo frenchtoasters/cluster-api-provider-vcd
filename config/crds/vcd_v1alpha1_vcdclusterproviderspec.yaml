@@ -27,8 +27,91 @@ spec:
         metadata:
           type: object
         spec:
+          properties:
+            clusterNetwork:
+              description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                Important: Run "make" to regenerate code after modifying this file'
+              properties:
+                pods:
+                  description: The network ranges from which Pod networks are allocated.
+                  properties:
+                    cidrBlocks:
+                      items:
+                        type: string
+                      type: array
+                  required:
+                  - cidrBlocks
+                  type: object
+                serviceDomain:
+                  description: Domain name for services.
+                  type: string
+                services:
+                  description: The network ranges from which service VIPs are allocated.
+                  properties:
+                    cidrBlocks:
+                      items:
+                        type: string
+                      type: array
+                  required:
+                  - cidrBlocks
+                  type: object
+              required:
+              - services
+              - pods
+              - serviceDomain
+              type: object
+            providerSpec:
+              properties:
+                value:
+                  description: Value is an inlined, serialized representation of the
+                    resource configuration. It is recommended that providers maintain
+                    their own versioned API types that should be serialized/deserialized
+                    from this field, akin to component config.
+                  type: object
+                valueFrom:
+                  description: Source for the provider configuration. Cannot be used
+                    if value is not empty.
+                  properties:
+                    machineClass:
+                      description: The machine class from which the provider config
+                        should be sourced.
+                      properties:
+                        provider:
+                          description: Provider is the name of the cloud-provider
+                            which MachineClass is intended for.
+                          type: string
+                      type: object
+                  type: object
+              type: object
+          required:
+          - clusterNetwork
           type: object
         status:
+          properties:
+            apiEndpoints:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "make" to regenerate code after modifying
+                this file'
+              items:
+                properties:
+                  host:
+                    description: The hostname on which the API server is serving.
+                    type: string
+                  port:
+                    description: The port on which the API server is serving.
+                    format: int64
+                    type: integer
+                required:
+                - host
+                - port
+                type: object
+              type: array
+            errorMessage:
+              type: string
+            errorReason:
+              type: string
+            providerStatus:
+              type: object
           type: object
   version: v1alpha1
 status:

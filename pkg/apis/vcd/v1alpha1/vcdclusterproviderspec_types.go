@@ -18,6 +18,9 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"sigs.k8s.io/cluster-api/pkg/apis/cluster/common"
+	"sigs.k8s.io/cluster-api/pkg/apis/cluster/v1alpha1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -27,12 +30,22 @@ import (
 type VcdClusterProviderSpecSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	ClusterNetwork v1alpha1.ClusterNetworkingConfig `json:"clusterNetwork"`
+
+	ProviderSpec v1alpha1.ProviderSpec `json:"providerSpec,omitempty"`
 }
 
 // VcdClusterProviderSpecStatus defines the observed state of VcdClusterProviderSpec
 type VcdClusterProviderSpecStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	APIEndpoints []v1alpha1.APIEndpoint `json:"apiEndpoints,omitempty"`
+
+	ErrorReason common.ClusterStatusError `json:"errorReason,omitempty"`
+
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	ProviderStatus *runtime.RawExtension `json:"providerStatus,omitempty"`
 }
 
 // +genclient

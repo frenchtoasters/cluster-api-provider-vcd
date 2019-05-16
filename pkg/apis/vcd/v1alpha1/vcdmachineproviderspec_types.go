@@ -17,7 +17,11 @@ limitations under the License.
 package v1alpha1
 
 import (
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"sigs.k8s.io/cluster-api/pkg/apis/cluster/common"
+	"sigs.k8s.io/cluster-api/pkg/apis/cluster/v1alpha1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -27,12 +31,40 @@ import (
 type VcdMachineProviderSpecSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+
+	Taints []v1.Taint `json:"taints,omitempty"`
+
+	ProviderSpec v1alpha1.ProviderSpec `json:"providerSpec"`
+
+	Versions v1alpha1.MachineVersionInfo `json:"versions,omitempty"`
+
+	ConfigSource *v1.NodeConfigSource `json:"configSource,omitempty"`
 }
 
 // VcdMachineProviderSpecStatus defines the observed state of VcdMachineProviderSpec
 type VcdMachineProviderSpecStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	NodeRef *v1.ObjectReference `json:"nodeRef,omitempty"`
+
+	LastUpdated *metav1.Time `json:"lastUpdated,omitempty"`
+
+	Versions *v1alpha1.MachineVersionInfo `json:"versions,omitempty"`
+
+	ErrorReason *common.MachineStatusError `json:"errorReason,omitempty"`
+
+	ErrorMessage *string `json:"errorMessage,omitempty"`
+
+	ProviderStatus *runtime.RawExtension `json:"providerStatus,omitempty"`
+
+	Addresses []v1.NodeAddress `json:"addresses,omitempty"`
+
+	Conditions []v1.NodeCondition `json:"conditions,omitempty"`
+
+	LastOperation *v1alpha1.LastOperation `json:"lastOperation,omitempty"`
+
+	Phase *string `json:"phase,omitempty"`
 }
 
 // +genclient
