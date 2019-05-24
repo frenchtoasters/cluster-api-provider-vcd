@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"sigs.k8s.io/cluster-api/pkg/apis/cluster/v1alpha1"
 	"testing"
 
 	"github.com/onsi/gomega"
@@ -34,7 +35,14 @@ func TestStorageVcdClusterProviderSpec(t *testing.T) {
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "foo",
 			Namespace: "default",
-		}}
+		},
+		Spec: VcdClusterProviderSpecSpec{
+			ClusterNetwork: v1alpha1.ClusterNetworkingConfig{
+				Services: v1alpha1.NetworkRanges{CIDRBlocks: []string{"10.96.0.0/12"}},
+				Pods:     v1alpha1.NetworkRanges{CIDRBlocks: []string{"192.168.0.0/16"}},
+			},
+		},
+	}
 	g := gomega.NewGomegaWithT(t)
 
 	// Test Create

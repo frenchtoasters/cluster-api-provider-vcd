@@ -365,7 +365,7 @@ spec:
               fieldPath: metadata.namespace
         - name: SECRET_NAME
           value: cluster-api-provider-vcd-webhook-server-secret
-        image: registry.gitlab.com/frenchtoasters/cluster-api-provider-vcd
+        image: controller:latest
         imagePullPolicy: Always
         name: manager
         ports:
